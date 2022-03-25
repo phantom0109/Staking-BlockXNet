@@ -75,4 +75,8 @@ export default {
 .staking-table > tr > td {
   border: 0px solid !Important;
 }
+
+/* .staking-table > tr > td:last-child { */
+/*   text-align: right; */
+/* } */
 </style>
