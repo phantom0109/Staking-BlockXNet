@@ -1,26 +1,23 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <StakingCard msg="Welcome to Your Vue.js App" />
+  <v-app>
+    <v-main>
+      <StakingCard />
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import StakingCard from './components/StakingCard.vue'
+import StakingCard from './components/StakingCard'
 
 export default {
   name: 'App',
+
   components: {
     StakingCard,
   },
+
+  data: () => ({
+    //
+  }),
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

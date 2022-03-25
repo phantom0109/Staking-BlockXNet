@@ -1,120 +1,77 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
-        >vue-cli documentation</a
-      >.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-          >babel</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-          >eslint</a
-        >
-      </li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li>
-        <a href="https://vuejs.org" target="_blank" rel="noopener"
-          >Core Docs</a
-        >
-      </li>
-      <li>
-        <a href="https://forum.vuejs.org" target="_blank" rel="noopener"
-          >Forum</a
-        >
-      </li>
-      <li>
-        <a href="https://chat.vuejs.org" target="_blank" rel="noopener"
-          >Community Chat</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/vuejs" target="_blank" rel="noopener"
-          >Twitter</a
-        >
-      </li>
-      <li>
-        <a href="https://news.vuejs.org" target="_blank" rel="noopener"
-          >News</a
-        >
-      </li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li>
-        <a href="https://router.vuejs.org" target="_blank" rel="noopener"
-          >vue-router</a
-        >
-      </li>
-      <li>
-        <a href="https://vuex.vuejs.org" target="_blank" rel="noopener"
-          >vuex</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-devtools#vue-devtools"
-          target="_blank"
-          rel="noopener"
-          >vue-devtools</a
-        >
-      </li>
-      <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener"
-          >vue-loader</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-          rel="noopener"
-          >awesome-vue</a
-        >
-      </li>
-    </ul>
-  </div>
+  <v-container>
+    <v-card elevation="2" class="mx-auto my-12" max-width="480">
+      <div class="d-flex justify-space-between align-center">
+        <div>
+          <v-card-subtitle class="grey--text pb-0">Chapter 2</v-card-subtitle>
+          <v-card-title class="pt-0 pb-0">Devastation</v-card-title>
+        </div>
+        <v-btn color="blue-grey" class="ma-2 white--text">
+          6 months
+          <!-- <v-icon -->
+          <!--   right -->
+          <!--   dark -->
+          <!-- > -->
+          <!--   mdi-cloud-upload -->
+          <!-- </v-icon> -->
+        </v-btn>
+      </div>
+      <v-card-title class="justify-center text-h4 font-weight-medium pb-0"
+        >4,000,000</v-card-title
+      >
+      <v-row class="mb-1">
+        <v-col class="pl-7 pr-7">
+          <v-card-subtitle class="subtitle grey--text pl-0 pb-1"
+            >348,759.6 Staked</v-card-subtitle
+          >
+          <v-progress-linear value="15"></v-progress-linear>
+        </v-col>
+      </v-row>
+      <v-simple-table>
+        <template v-slot:default>
+          <tbody class="staking-table">
+            <tr>
+              <td>Total Locked Value</td>
+              <td>$11,401</td>
+            </tr>
+            <tr>
+              <td>Maturity Return (APY%)</td>
+              <td>45%</td>
+            </tr>
+            <tr>
+              <td>My Staked</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Treasure Tickets</td>
+              <td>--</td>
+            </tr>
+            <tr>
+              <td>My Rewards</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+      <div class="stake-btn-container">
+        <v-btn rounded color="primary" dark x-large block>Stake</v-btn>
+      </div>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
 export default {
   name: 'StakingCard',
-  props: {
-    msg: String,
-  },
+
+  data: () => ({}),
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
+<style>
+.stake-btn-container {
+  padding: 24px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.staking-table > tr > td {
+  border: 0px solid !Important;
 }
 </style>
