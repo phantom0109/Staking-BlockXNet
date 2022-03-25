@@ -64,6 +64,7 @@
 export default {
   name: 'StakingCard',
 
+  //Can be populated later
   data: () => ({}),
 }
 </script>
