@@ -3,8 +3,8 @@
     <v-card elevation="2" class="mx-auto my-12" max-width="480">
       <div class="d-flex justify-space-between align-center">
         <div>
-          <v-card-subtitle class="grey--text pb-0">Chapter 2</v-card-subtitle>
-          <v-card-title class="pt-0 pb-0">Devastation</v-card-title>
+          <!-- <v-card-subtitle class="grey--text pb-0">Chapter 2</v-card-subtitle> -->
+          <v-card-title class="pt-2 pb-0">BlockX Staking</v-card-title>
         </div>
         <!-- <v-btn color="blue-grey" class="ma-2 white--text">
           6 months
@@ -18,22 +18,24 @@
           CONNECT
         </v-btn>
       </div>
-      <v-card-title class="justify-center text-h4 font-weight-medium pb-0"
-        >4,000,000</v-card-title
+      <v-card-subtitle class="grey--text pb-0">Total Value Locked</v-card-subtitle>
+      <v-card-title class="justify-center text-h4 font-weight-medium mb-4"
+        >$4,000,000</v-card-title
       >
-      <v-row class="mb-1">
+      
+      <!-- <v-row class="mb-1">
         <v-col class="pl-7 pr-7">
           <v-card-subtitle class="subtitle grey--text pl-0 pb-1"
             >348,759.6 Staked</v-card-subtitle
           >
           <v-progress-linear value="15"></v-progress-linear>
         </v-col>
-      </v-row>
+      </v-row> -->
       <v-simple-table>
         <template v-slot:default>
           <tbody class="staking-table">
             <tr>
-              <td>Total Locked Value</td>
+              <td>Total Locked BCX</td>
               <td>{{ totalStaked }} BCX</td>
             </tr>
             <tr>
@@ -44,10 +46,10 @@
               <td>My Staked</td>
               <td>{{ myStaked }} BCX</td>
             </tr>
-            <tr>
+            <!-- <tr>
               <td>Treasure Tickets</td>
               <td>--</td>
-            </tr>
+            </tr> -->
             <tr>
               <td>My Rewards</td>
               <td>{{ myRewards }} BCX</td>
