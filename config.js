@@ -1,355 +1,321 @@
-export const address = "0x7d63276Dff76f5005Eb04765E14A0BACC713BEDf"
+export const address = "0x30b6F49AAB2E1264c2aF79720C94701306568090"
 export const abi = [
-    {
-       "inputs":[
-          {
-             "internalType":"address",
-             "name":"_stakingToken",
-             "type":"address"
-          },
-          {
-             "internalType":"address",
-             "name":"_rewardsToken",
-             "type":"address"
-          }
-       ],
-       "stateMutability":"nonpayable",
-       "type":"constructor"
-    },
-    {
-       "inputs":[
-          {
-             "internalType":"address",
-             "name":"user",
-             "type":"address"
-          }
-       ],
-       "name":"addAdmin",
-       "outputs":[
-          
-       ],
-       "stateMutability":"nonpayable",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          {
-             "internalType":"address",
-             "name":"account",
-             "type":"address"
-          }
-       ],
-       "name":"earned",
-       "outputs":[
-          {
-             "internalType":"uint256",
-             "name":"",
-             "type":"uint256"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          
-       ],
-       "name":"getBalance",
-       "outputs":[
-          {
-             "internalType":"uint256",
-             "name":"",
-             "type":"uint256"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          {
-             "internalType":"address",
-             "name":"_user",
-             "type":"address"
-          }
-       ],
-       "name":"getBalanceOfUser",
-       "outputs":[
-          {
-             "internalType":"uint256",
-             "name":"",
-             "type":"uint256"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          
-       ],
-       "name":"getReward",
-       "outputs":[
-          
-       ],
-       "stateMutability":"nonpayable",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          
-       ],
-       "name":"lastUpdateTime",
-       "outputs":[
-          {
-             "internalType":"uint256",
-             "name":"",
-             "type":"uint256"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          
-       ],
-       "name":"multiplier",
-       "outputs":[
-          {
-             "internalType":"uint256",
-             "name":"",
-             "type":"uint256"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          {
-             "internalType":"address",
-             "name":"user",
-             "type":"address"
-          }
-       ],
-       "name":"removeAdmin",
-       "outputs":[
-          
-       ],
-       "stateMutability":"nonpayable",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          
-       ],
-       "name":"rewardPerToken",
-       "outputs":[
-          {
-             "internalType":"uint256",
-             "name":"",
-             "type":"uint256"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          
-       ],
-       "name":"rewardPerTokenStored",
-       "outputs":[
-          {
-             "internalType":"uint256",
-             "name":"",
-             "type":"uint256"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          
-       ],
-       "name":"rewardRate",
-       "outputs":[
-          {
-             "internalType":"uint256",
-             "name":"",
-             "type":"uint256"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          {
-             "internalType":"address",
-             "name":"",
-             "type":"address"
-          }
-       ],
-       "name":"rewards",
-       "outputs":[
-          {
-             "internalType":"uint256",
-             "name":"",
-             "type":"uint256"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          
-       ],
-       "name":"rewardsToken",
-       "outputs":[
-          {
-             "internalType":"contract IERC20",
-             "name":"",
-             "type":"address"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          {
-             "internalType":"uint256",
-             "name":"_amount",
-             "type":"uint256"
-          }
-       ],
-       "name":"stake",
-       "outputs":[
-          
-       ],
-       "stateMutability":"nonpayable",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          {
-             "internalType":"uint256",
-             "name":"",
-             "type":"uint256"
-          }
-       ],
-       "name":"stakers",
-       "outputs":[
-          {
-             "internalType":"address",
-             "name":"",
-             "type":"address"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          
-       ],
-       "name":"stakingToken",
-       "outputs":[
-          {
-             "internalType":"contract IERC20",
-             "name":"",
-             "type":"address"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          
-       ],
-       "name":"totalRewards",
-       "outputs":[
-          {
-             "internalType":"uint256",
-             "name":"",
-             "type":"uint256"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          
-       ],
-       "name":"totalStaked",
-       "outputs":[
-          {
-             "internalType":"uint256",
-             "name":"",
-             "type":"uint256"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          {
-             "internalType":"address",
-             "name":"user",
-             "type":"address"
-          }
-       ],
-       "name":"transferOwnership",
-       "outputs":[
-          
-       ],
-       "stateMutability":"nonpayable",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          {
-             "internalType":"address",
-             "name":"",
-             "type":"address"
-          }
-       ],
-       "name":"userRewardPerTokenPaid",
-       "outputs":[
-          {
-             "internalType":"uint256",
-             "name":"",
-             "type":"uint256"
-          }
-       ],
-       "stateMutability":"view",
-       "type":"function"
-    },
-    {
-       "inputs":[
-          {
-             "internalType":"uint256",
-             "name":"_amount",
-             "type":"uint256"
-          }
-       ],
-       "name":"withdraw",
-       "outputs":[
-          
-       ],
-       "stateMutability":"nonpayable",
-       "type":"function"
-    }
+   {
+      "inputs": [
+         {
+            "internalType": "address",
+            "name": "_stakingToken",
+            "type": "address"
+         },
+         {
+            "internalType": "address",
+            "name": "_rewardsToken",
+            "type": "address"
+         }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+         }
+      ],
+      "name": "addAdmin",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+         }
+      ],
+      "name": "earned",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "getBalance",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "address",
+            "name": "_user",
+            "type": "address"
+         }
+      ],
+      "name": "getBalanceOfUser",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "getReward",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "lastUpdateTime",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "multiplier",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+         }
+      ],
+      "name": "removeAdmin",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "rewardPerToken",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "rewardPerTokenStored",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "rewardRate",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+         }
+      ],
+      "name": "rewards",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "rewardsToken",
+      "outputs": [
+         {
+            "internalType": "contract IERC20",
+            "name": "",
+            "type": "address"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "uint256",
+            "name": "_amount",
+            "type": "uint256"
+         }
+      ],
+      "name": "stake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "name": "stakers",
+      "outputs": [
+         {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "stakingToken",
+      "outputs": [
+         {
+            "internalType": "contract IERC20",
+            "name": "",
+            "type": "address"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "totalRewards",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [],
+      "name": "totalStaked",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+         }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+         }
+      ],
+      "name": "userRewardPerTokenPaid",
+      "outputs": [
+         {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+         }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "uint256",
+            "name": "_amount",
+            "type": "uint256"
+         }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   }
 ]
 
-export const erc20_address = "0x3e5570072f96a72703B0276109232eDe994e241E"
+export const erc20_address = "0x7dAA6eb798cf8cDdD1B9D73236694371C0Cb58B7"
 export const erc20_abi = [
     {
        "inputs":[

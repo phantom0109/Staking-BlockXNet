@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container data-app>
     <v-card elevation="2" class="mx-auto my-12" max-width="480">
       <div class="d-flex justify-space-between align-center">
         <div>
@@ -18,11 +18,13 @@
           CONNECT
         </v-btn>
       </div>
-      <v-card-subtitle class="grey--text pb-0">Total Value Locked</v-card-subtitle>
+      <v-card-subtitle class="grey--text pb-0"
+        >Total Value Locked</v-card-subtitle
+      >
       <v-card-title class="justify-center text-h4 font-weight-medium mb-4"
         >$4,000,000</v-card-title
       >
-      
+
       <!-- <v-row class="mb-1">
         <v-col class="pl-7 pr-7">
           <v-card-subtitle class="subtitle grey--text pl-0 pb-1"
@@ -59,17 +61,42 @@
       </v-simple-table>
 
       <div v-if="staked" class="withdraw-btn-container">
-        <v-btn rounded class="min-w-52" outlined color="teal" dark x-large>
+        <v-btn
+          rounded
+          class="min-w-52"
+          outlined
+          color="teal"
+          dark
+          x-large
+          @click=";(dialog = true), (dialogHeader = 'Stake')"
+        >
           +
         </v-btn>
-        <v-btn rounded class="min-w-52" outlined color="error" dark x-large>
+        <v-btn
+          rounded
+          class="min-w-52"
+          outlined
+          color="error"
+          dark
+          x-large
+          @click=";(dialog = true), (dialogHeader = 'Unstake')"
+        >
           -
         </v-btn>
         <div class="stretch"></div>
-        <v-btn rounded color="primary" @click="claim" dark x-large> Claim </v-btn>
+        <v-btn rounded color="primary" @click="claim" dark x-large>
+          Claim
+        </v-btn>
       </div>
       <div v-else class="stake-btn-container">
-        <v-btn rounded v-if="approved" color="primary" dark x-large block
+        <v-btn
+          rounded
+          v-if="approved"
+          color="primary"
+          dark
+          x-large
+          block
+          @click=";(dialog = true), (dialogHeader = 'Stake')"
           >Stake</v-btn
         >
         <v-btn
@@ -85,6 +112,39 @@
         </v-btn>
       </div>
     </v-card>
+    <v-dialog v-model="dialog" persistent max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">{{ dialogHeader }} BCX tokens</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12" sm="12" md="12">
+                <v-text-field
+                  label="Amount"
+                  v-model="amount"
+                  v-if="loading"
+                  loading
+                ></v-text-field>
+                <v-text-field
+                  label="Amount"
+                  v-model="amount"
+                  v-else
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="dialog = false">
+            Cancel
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="handleAgree"> OK </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -116,7 +176,11 @@ export default {
           erc20_abi,
           signer
         )
-        await erc20.approve(address, this.$ethers.constants.MaxUint256)
+        const tx = await erc20.approve(
+          address,
+          this.$ethers.constants.MaxUint256
+        )
+        await tx.wait()
         await this.getData()
       } catch (e) {
         console.log(e)
@@ -134,19 +198,21 @@ export default {
           erc20_abi,
           signer
         )
-        // const totalStaked = await stakingContract.totalStaked()
+        const totalStaked = await stakingContract.totalStaked()
+        this.totalStaked = this.$ethers.utils.formatEther(totalStaked)
         const myStaked = await stakingContract.getBalance()
-        const myRewards = await stakingContract.earned(this.currentAccount)
-        const allowance = await erc20.allowance(this.currentAccount, address)
-        if (Number(allowance)) this.approved = true
-        else this.approved = false
-        // this.totalStaked = this.$ethers.utils.formatEther(totalStaked)
         this.myStaked = this.$ethers.utils.formatEther(myStaked)
         if (Number(myStaked)) this.staked = true
         else this.staked = false
-        this.myRewards = Number(
-          this.$ethers.utils.formatEther(myRewards)
-        ).toFixed(4)
+        if (this.staked) {
+          const myRewards = await stakingContract.earned(this.currentAccount)
+          this.myRewards = this.$ethers.utils.formatEther(myRewards, {
+            pad: true,
+          })
+        }
+        const allowance = await erc20.allowance(this.currentAccount, address)
+        if (Number(allowance)) this.approved = true
+        else this.approved = false
         // console.log('staked amount', totalStaked.toString())
         return true
       } catch (e) {
@@ -163,9 +229,51 @@ export default {
         const stakingContract = new this.$ethers.Contract(address, abi, signer)
         const tx = await stakingContract.getReward()
         await tx.wait()
+        await this.getData()
       } catch (e) {
         console.log(e)
       }
+    },
+    stake: async function () {
+      try {
+        const provider = new this.$ethers.providers.Web3Provider(
+          window.web3.currentProvider
+        )
+        const signer = provider.getSigner()
+        const stakingContract = new this.$ethers.Contract(address, abi, signer)
+        const tx = await stakingContract.stake(
+          this.$ethers.utils.parseEther(this.amount)
+        )
+        await tx.wait()
+        await this.getData()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    unStake: async function () {
+      try {
+        const provider = new this.$ethers.providers.Web3Provider(
+          window.web3.currentProvider
+        )
+        const signer = provider.getSigner()
+        const stakingContract = new this.$ethers.Contract(address, abi, signer)
+        const tx = await stakingContract.withdraw(
+          this.$ethers.utils.parseEther(this.amount)
+        )
+        await tx.wait()
+        await this.getData()
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    handleAgree: async function () {
+      if (Number(this.amount) > 0) {
+        this.loading = true
+        if (this.dialogHeader === 'Stake') await this.stake()
+        else await this.unStake()
+        this.loading = false
+        this.dialog = false
+      } else return alert('invalid amount')
     },
     checkConnectedWalletExist: async function () {
       try {
@@ -219,6 +327,10 @@ export default {
     myRewards: '0.0',
     approved: false,
     staked: false,
+    dialog: false,
+    dialogHeader: '',
+    amount: 0,
+    loading: false,
   }),
 }
 </script>
