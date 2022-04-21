@@ -22,7 +22,7 @@
         >Total Value Locked</v-card-subtitle
       >
       <v-card-title class="justify-center text-h4 font-weight-medium mb-4"
-        >$4,000,000</v-card-title
+        >${{ totalLocked }}</v-card-title
       >
 
       <!-- <v-row class="mb-1">
@@ -42,7 +42,7 @@
             </tr>
             <tr>
               <td>Maturity Return (APY%)</td>
-              <td>45%</td>
+              <td>{{ apr }}%</td>
             </tr>
             <tr>
               <td>My Staked</td>
@@ -79,7 +79,7 @@
           color="error"
           dark
           x-large
-          @click=";(dialog = true), (dialogHeader = 'Unstake')"
+          @click="unStake"
         >
           -
         </v-btn>
@@ -200,8 +200,12 @@ export default {
         )
         const totalStaked = await stakingContract.totalStaked()
         this.totalStaked = this.$ethers.utils.formatEther(totalStaked)
+        this.totalLocked = this.$ethers.utils.commify(this.$ethers.utils.formatEther(totalStaked.mul(15).div(100)))
         const myStaked = await stakingContract.getBalance()
         this.myStaked = this.$ethers.utils.formatEther(myStaked)
+        if(Number(this.totalStaked))
+          this.apr = 3600 * 24 * 365 / Number(this.totalStaked) * 100
+        else this.apr = 0
         if (Number(myStaked)) this.staked = true
         else this.staked = false
         if (this.staked) {
@@ -257,9 +261,7 @@ export default {
         )
         const signer = provider.getSigner()
         const stakingContract = new this.$ethers.Contract(address, abi, signer)
-        const tx = await stakingContract.withdraw(
-          this.$ethers.utils.parseEther(this.amount)
-        )
+        const tx = await stakingContract.withdraw()
         await tx.wait()
         await this.getData()
       } catch (e) {
@@ -323,6 +325,7 @@ export default {
     currentAccount: '',
     connected: false,
     totalStaked: '0.0',
+    totalLocked: '0',
     myStaked: '0.0',
     myRewards: '0.0',
     approved: false,
@@ -331,6 +334,7 @@ export default {
     dialogHeader: '',
     amount: 0,
     loading: false,
+    apr: 0
   }),
 }
 </script>

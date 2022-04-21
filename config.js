@@ -1,4 +1,4 @@
-export const address = "0x30b6F49AAB2E1264c2aF79720C94701306568090"
+export const address = "0xfA6105DCe6f3CFBC30395C7CbbE8C8c15b91719a"
 export const abi = [
    {
       "inputs": [
@@ -301,13 +301,7 @@ export const abi = [
       "type": "function"
    },
    {
-      "inputs": [
-         {
-            "internalType": "uint256",
-            "name": "_amount",
-            "type": "uint256"
-         }
-      ],
+      "inputs": [],
       "name": "withdraw",
       "outputs": [],
       "stateMutability": "nonpayable",
