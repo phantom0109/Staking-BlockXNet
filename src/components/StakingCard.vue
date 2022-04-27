@@ -203,8 +203,9 @@ export default {
         this.totalLocked = this.$ethers.utils.commify(this.$ethers.utils.formatEther(totalStaked.mul(15).div(100)))
         const myStaked = await stakingContract.getBalance()
         this.myStaked = this.$ethers.utils.formatEther(myStaked)
+        const rewardRate = await stakingContract.rewardRate();
         if(Number(this.totalStaked))
-          this.apr = 3600 * 24 * 365 / Number(this.totalStaked) * 100
+          this.apr = 3600 * 24 * 365 * Number(this.$ethers.utils.formatEther(rewardRate)) / Number(this.totalStaked) * 100
         else this.apr = 0
         if (Number(myStaked)) this.staked = true
         else this.staked = false

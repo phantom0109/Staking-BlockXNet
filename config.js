@@ -1,4 +1,4 @@
-export const address = "0x62C497ed36252F4B983BA16eAd23263A5b139971"
+export const address = "0x86d8f7C4503a50F7d766aCFbDc14954E7a39f39F"
 export const abi = [
    {
       "inputs": [
@@ -9,7 +9,7 @@ export const abi = [
          },
          {
             "internalType": "address",
-            "name": "_rewardsToken",
+            "name": "_rewardPool",
             "type": "address"
          }
       ],
@@ -46,6 +46,19 @@ export const abi = [
          }
       ],
       "stateMutability": "view",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+         }
+      ],
+      "name": "emergencyWithdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
    },
    {
@@ -200,6 +213,32 @@ export const abi = [
    {
       "inputs": [
          {
+            "internalType": "address",
+            "name": "_rewardPool",
+            "type": "address"
+         }
+      ],
+      "name": "setRewardPool",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
+            "internalType": "uint256",
+            "name": "rate",
+            "type": "uint256"
+         }
+      ],
+      "name": "setRewardRate",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+   },
+   {
+      "inputs": [
+         {
             "internalType": "uint256",
             "name": "_amount",
             "type": "uint256"
@@ -309,7 +348,7 @@ export const abi = [
    }
 ]
 
-export const erc20_address = "0x7dAA6eb798cf8cDdD1B9D73236694371C0Cb58B7"
+export const erc20_address = "0xfd5484CDA89a0aE4eD7158551c497Dd2619db413"
 export const erc20_abi = [
     {
        "inputs":[
