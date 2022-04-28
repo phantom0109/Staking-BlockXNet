@@ -19,10 +19,10 @@
         </v-btn>
       </div>
       <v-card-subtitle class="grey--text pb-0"
-        >Total Value Locked</v-card-subtitle
+        >Total Tokens Locked</v-card-subtitle
       >
       <v-card-title class="justify-center text-h4 font-weight-medium mb-4"
-        >${{ totalLocked }}</v-card-title
+        >{{ totalStaked }}</v-card-title
       >
 
       <!-- <v-row class="mb-1">
@@ -36,10 +36,10 @@
       <v-simple-table>
         <template v-slot:default>
           <tbody class="staking-table">
-            <tr>
+            <!-- <tr>
               <td>Total Locked BCX</td>
               <td>{{ totalStaked }} BCX</td>
-            </tr>
+            </tr> -->
             <tr>
               <td>Maturity Return (APY%)</td>
               <td>{{ apr }}%</td>
@@ -48,10 +48,6 @@
               <td>My Staked</td>
               <td>{{ myStaked }} BCX</td>
             </tr>
-            <!-- <tr>
-              <td>Treasure Tickets</td>
-              <td>--</td>
-            </tr> -->
             <tr>
               <td>My Rewards</td>
               <td>{{ myRewards }} BCX</td>
@@ -63,29 +59,27 @@
       <div v-if="staked" class="withdraw-btn-container">
         <v-btn
           rounded
-          class="min-w-52"
           outlined
           color="teal"
           dark
           x-large
           @click=";(dialog = true), (dialogHeader = 'Stake')"
         >
-          +
+          Add Stake
         </v-btn>
         <v-btn
           rounded
-          class="min-w-52"
           outlined
           color="error"
           dark
           x-large
           @click="unStake"
         >
-          -
+          Unstake
         </v-btn>
-        <div class="stretch"></div>
+        <!-- <div class="stretch"></div> -->
         <v-btn rounded color="primary" @click="claim" dark x-large>
-          Claim
+          Claim Rewards
         </v-btn>
       </div>
       <div v-else class="stake-btn-container">
@@ -112,6 +106,16 @@
         </v-btn>
       </div>
     </v-card>
+    <div>
+      <h3>Info: </h3>
+      <p>Total Tokens Locked - This is the total amount of BCX tokens staked by the users.</p>
+      <p>Maturity Return (APY)% - This is current rate of earnings of all the stakers.</p>
+      <p>My Staked - This represents your total staked BCX tokens into the staking pool.</p>
+      <p>My Rewards - The amount of BCX you have earned so far.</p>
+      <p>Add Stake - This allows the user to add more BCX into the staking pool for more earnings.</p>
+      <p>Unstake - This allows the user claim all their BCX rewards and unstake all their BCX tokens.</p>
+      <p>Claim Rewards - This is for the user to be able to claim ONLY the BCX rewards but their staked BCX tokens will remain in stake.</p>
+    </div>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
@@ -171,11 +175,13 @@ export default {
           window.web3.currentProvider
         )
         const signer = provider.getSigner()
+        console.log("Signer: ", signer)
         const erc20 = new this.$ethers.Contract(
           erc20_address,
           erc20_abi,
           signer
         )
+        console.log("ERC20 Address: ", erc20_address);
         const tx = await erc20.approve(
           address,
           this.$ethers.constants.MaxUint256
@@ -232,9 +238,11 @@ export default {
         )
         const signer = provider.getSigner()
         const stakingContract = new this.$ethers.Contract(address, abi, signer)
+        // console.log(stakingContract)
         const tx = await stakingContract.getReward()
-        await tx.wait()
-        await this.getData()
+        console.log(tx)
+        // await tx.wait()
+        // await this.getData()
       } catch (e) {
         console.log(e)
       }
