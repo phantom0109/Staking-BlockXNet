@@ -1,4 +1,4 @@
-export const address = "0x86d8f7C4503a50F7d766aCFbDc14954E7a39f39F"
+export const address = "0xA878b8eB62B4a25308CA75B0c89C718F1448B50F"
 export const abi = [
    {
       "inputs": [
@@ -348,7 +348,7 @@ export const abi = [
    }
 ]
 
-export const erc20_address = "0xfd5484CDA89a0aE4eD7158551c497Dd2619db413"
+export const erc20_address = "0x86E25f1e266eA4831b3CBb68164753DcbA30D047"
 export const erc20_abi = [
     {
        "inputs":[

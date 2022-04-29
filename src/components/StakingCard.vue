@@ -22,7 +22,7 @@
         >Total Tokens Locked</v-card-subtitle
       >
       <v-card-title class="justify-center text-h4 font-weight-medium mb-4"
-        >{{ totalStaked }}</v-card-title
+        >{{ totalStaked }} BCX</v-card-title
       >
 
       <!-- <v-row class="mb-1">
@@ -64,21 +64,15 @@
           dark
           x-large
           @click=";(dialog = true), (dialogHeader = 'Stake')"
+           width="45%"
         >
           Add Stake
         </v-btn>
-        <v-btn
-          rounded
-          outlined
-          color="error"
-          dark
-          x-large
-          @click="unStake"
-        >
+        <v-btn rounded outlined color="error" dark x-large @click="unStake" width="45%">
           Unstake
         </v-btn>
         <!-- <div class="stretch"></div> -->
-        <v-btn rounded color="primary" @click="claim" dark x-large>
+        <v-btn rounded color="primary" @click="claim" dark x-large width="100%" >
           Claim Rewards
         </v-btn>
       </div>
@@ -106,16 +100,38 @@
         </v-btn>
       </div>
     </v-card>
-    <div>
-      <h3>Info: </h3>
-      <p>Total Tokens Locked - This is the total amount of BCX tokens staked by the users.</p>
-      <p>Maturity Return (APY)% - This is current rate of earnings of all the stakers.</p>
-      <p>My Staked - This represents your total staked BCX tokens into the staking pool.</p>
-      <p>My Rewards - The amount of BCX you have earned so far.</p>
-      <p>Add Stake - This allows the user to add more BCX into the staking pool for more earnings.</p>
-      <p>Unstake - This allows the user claim all their BCX rewards and unstake all their BCX tokens.</p>
-      <p>Claim Rewards - This is for the user to be able to claim ONLY the BCX rewards but their staked BCX tokens will remain in stake.</p>
-    </div>
+    <v-container class="grey lighten-5" style="max-width: 480px">
+      <v-row>
+        <v-col md="12">
+          <h3>Info:</h3>
+          <p>
+            Total Tokens Locked - This is the total amount of BCX tokens staked
+            by the users.
+          </p>
+          <p>
+            Maturity Return (APY)% - This is current rate of earnings of all the
+            stakers.
+          </p>
+          <p>
+            My Staked - This represents your total staked BCX tokens into the
+            staking pool.
+          </p>
+          <p>My Rewards - The amount of BCX you have earned so far.</p>
+          <p>
+            Add Stake - This allows the user to add more BCX into the staking
+            pool for more earnings.
+          </p>
+          <p>
+            Unstake - This allows the user claim all their BCX rewards and
+            unstake all their BCX tokens.
+          </p>
+          <p>
+            Claim Rewards - This is for the user to be able to claim ONLY the
+            BCX rewards but their staked BCX tokens will remain in stake.
+          </p>
+        </v-col>
+      </v-row>
+    </v-container>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
@@ -175,13 +191,13 @@ export default {
           window.web3.currentProvider
         )
         const signer = provider.getSigner()
-        console.log("Signer: ", signer)
+        console.log('Signer: ', signer)
         const erc20 = new this.$ethers.Contract(
           erc20_address,
           erc20_abi,
           signer
         )
-        console.log("ERC20 Address: ", erc20_address);
+        console.log('ERC20 Address: ', erc20_address)
         const tx = await erc20.approve(
           address,
           this.$ethers.constants.MaxUint256
@@ -205,19 +221,32 @@ export default {
           signer
         )
         const totalStaked = await stakingContract.totalStaked()
-        this.totalStaked = this.$ethers.utils.formatEther(totalStaked)
-        this.totalLocked = this.$ethers.utils.commify(this.$ethers.utils.formatEther(totalStaked.mul(15).div(100)))
+        this.totalStaked = this.$ethers.utils.commify(
+          this.$ethers.utils.formatEther(totalStaked)
+        )
+        this.totalLocked = this.$ethers.utils.commify(
+          this.$ethers.utils.formatEther(totalStaked.mul(15).div(100))
+        )
         const myStaked = await stakingContract.getBalance()
-        this.myStaked = this.$ethers.utils.formatEther(myStaked)
-        const rewardRate = await stakingContract.rewardRate();
-        if(Number(this.totalStaked))
-          this.apr = 3600 * 24 * 365 * Number(this.$ethers.utils.formatEther(rewardRate)) / Number(this.totalStaked) * 100
+        this.myStaked = this.$ethers.utils.commify(
+          this.$ethers.utils.formatEther(myStaked)
+        )
+        const rewardRate = await stakingContract.rewardRate()
+        if (Number(totalStaked))
+          this.apr = this.$ethers.utils.commify(
+            ((3600 *
+              24 *
+              365 *
+              Number(this.$ethers.utils.formatEther(rewardRate))) /
+              Number(this.$ethers.utils.formatEther(totalStaked))) *
+            100)
         else this.apr = 0
         if (Number(myStaked)) this.staked = true
         else this.staked = false
         if (this.staked) {
           const myRewards = await stakingContract.earned(this.currentAccount)
-          this.myRewards = this.$ethers.utils.formatEther(myRewards, {
+          const remainder = myRewards.mod(1e14)
+          this.myRewards = this.$ethers.utils.formatEther(myRewards.sub(remainder), {
             pad: true,
           })
         }
@@ -343,7 +372,7 @@ export default {
     dialogHeader: '',
     amount: 0,
     loading: false,
-    apr: 0
+    apr: 0,
   }),
 }
 </script>
@@ -356,9 +385,11 @@ export default {
 }
 .withdraw-btn-container {
   display: flex !important;
+  justify-content: space-between;
   flex-direction: row;
-  gap: 12px;
+  gap: 24px;
   padding: 24px;
+  flex-wrap: wrap;
 }
 .min-w-52 {
   min-width: 52px !important;
