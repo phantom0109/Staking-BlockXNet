@@ -232,14 +232,10 @@ export default {
           this.$ethers.utils.formatEther(myStaked)
         )
         const rewardRate = await stakingContract.rewardRate()
-        if (Number(totalStaked))
-          this.apr = this.$ethers.utils.commify(
-            ((3600 *
-              24 *
-              365 *
-              Number(this.$ethers.utils.formatEther(rewardRate))) /
-              Number(this.$ethers.utils.formatEther(totalStaked))) *
-            100)
+        if (Number(totalStaked)) {
+          const apr = rewardRate.mul(3600 * 24 * 365 * 100).div(totalStaked)
+          this.apr = this.$ethers.utils.commify(apr)
+        }
         else this.apr = 0
         if (Number(myStaked)) this.staked = true
         else this.staked = false
