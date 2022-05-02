@@ -42,7 +42,7 @@ contract Staking {
     function setRewardPool(address _rewardPool) external onlyAdmin() {
         rewardPool = RewardPool(_rewardPool);
     }
-    function setRewardRate(uint rate) external onlyAdmin() {
+    function setRewardRate(uint rate) external onlyOwner() {
         rewardRate = rate;
     }
     function addAdmin(address user) external onlyOwner() {
