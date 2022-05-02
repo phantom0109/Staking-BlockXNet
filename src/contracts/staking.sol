@@ -8,7 +8,7 @@ contract Staking {
     IERC20 public rewardsToken;
     IERC20 public stakingToken;
 
-    uint public rewardRate = 1e18;
+    uint public rewardRate = 63419e14;
     uint public lastUpdateTime;
     uint public rewardPerTokenStored;
     uint public multiplier = 1e18;
