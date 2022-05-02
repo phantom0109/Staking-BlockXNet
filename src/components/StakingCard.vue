@@ -163,10 +163,19 @@
                   v-model="amount"
                   v-if="loading"
                   loading
+                  :rules="[
+                    () => amount <= myBCX || 'You cannot stake more than your BCX balance',
+                    () => amount % 1 == 0 || 'Please enter whole numbers only'
+                    ]"
                 ></v-text-field>
                 <v-text-field
                   label="Amount"
                   v-model="amount"
+                  type='number'
+                  :rules="[
+                    () => amount <= myBCX || 'You cannot stake more than your BCX balance',
+                    () => amount % 1 == 0 || 'Please enter whole numbers only'
+                    ]"
                   v-else
                 ></v-text-field>
               </v-col>
@@ -178,7 +187,7 @@
           <v-btn color="blue darken-1" text @click="dialog = false">
             Cancel
           </v-btn>
-          <v-btn color="blue darken-1" text @click="handleAgree"> OK </v-btn>
+          <v-btn color="blue darken-1" text @click="handleAgree" :disabled="amount > myBCX || amount % 1 != 0"> OK </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -242,7 +251,6 @@ export default {
           signer
         )
         this.myBCX = await erc20.balanceOf(this.currentAccount)
-        console.log("My BCX: ", this.myBCX)
         const totalStaked = await stakingContract.totalStaked()
         this.totalStaked = this.$ethers.utils.commify(
           this.$ethers.utils.formatEther(totalStaked)
@@ -388,7 +396,17 @@ export default {
         console.log(error)
       }
     },
+    checkBalance() {
+      console.log
+    }
   },
+  // computed: {
+  //   rules() {
+  //         value => (value || '').length <= 20 || 'Max 20 characters'
+  //         return true
+  //       }
+  // },
+  
   //Can be populated later
   data: () => ({
     currentAccount: '',
@@ -406,7 +424,7 @@ export default {
     loading: false,
     apr: 0,
     processingDialog: false,
-    processingText: 'Approving'
+    processingText: 'Approving',
   }),
 }
 </script>
