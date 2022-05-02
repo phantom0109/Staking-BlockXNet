@@ -45,6 +45,10 @@
               <td>{{ apr }}%</td>
             </tr>
             <tr>
+              <td>My BCX in wallet</td>
+              <td>{{ myBCX }} BCX</td>
+            </tr>
+            <tr>
               <td>My Staked</td>
               <td>{{ myStaked }} BCX</td>
             </tr>
@@ -100,7 +104,7 @@
         </v-btn>
       </div>
     </v-card>
-    <v-container class="grey lighten-5" style="max-width: 480px">
+    <v-container class="grey lighten-5" style="max-width: 720px">
       <v-row>
         <v-col md="12">
           <h3>Info:</h3>
@@ -132,6 +136,19 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-dialog v-model="processingDialog" persistent width="500">
+      <v-card>
+        <v-card-title class="text-h6 grey lighten-2">
+          Loading...
+        </v-card-title>
+
+        <v-card-text class="mt-2 mb-5">
+         {{processingText}} your BCX. Please wait...
+        </v-card-text>
+
+        <v-divider></v-divider>
+      </v-card>
+    </v-dialog>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
@@ -187,6 +204,8 @@ export default {
     },
     approve: async function () {
       try {
+        this.processingDialog = true
+        this.processingText = 'Approving'
         const provider = new this.$ethers.providers.Web3Provider(
           window.web3.currentProvider
         )
@@ -204,8 +223,10 @@ export default {
         )
         await tx.wait()
         await this.getData()
+        this.processingDialog = false
       } catch (e) {
         console.log(e)
+        this.processingDialog = false
       }
     },
     getData: async function () {
@@ -220,6 +241,8 @@ export default {
           erc20_abi,
           signer
         )
+        this.myBCX = await erc20.balanceOf(this.currentAccount)
+        console.log("My BCX: ", this.myBCX)
         const totalStaked = await stakingContract.totalStaked()
         this.totalStaked = this.$ethers.utils.commify(
           this.$ethers.utils.formatEther(totalStaked)
@@ -258,6 +281,8 @@ export default {
     },
     claim: async function () {
       try {
+        this.processingDialog = true
+        this.processingText = 'Claiming'
         const provider = new this.$ethers.providers.Web3Provider(
           window.web3.currentProvider
         )
@@ -265,15 +290,19 @@ export default {
         const stakingContract = new this.$ethers.Contract(address, abi, signer)
         // console.log(stakingContract)
         const tx = await stakingContract.getReward()
-        console.log(tx)
-        // await tx.wait()
-        // await this.getData()
+        // console.log(tx)
+        await tx.wait()
+        await this.getData()
+        this.processingDialog = false
       } catch (e) {
+        this.processingDialog = false
         console.log(e)
       }
     },
     stake: async function () {
       try {
+        this.processingDialog = true
+        this.processingText = 'Staking'
         const provider = new this.$ethers.providers.Web3Provider(
           window.web3.currentProvider
         )
@@ -284,12 +313,16 @@ export default {
         )
         await tx.wait()
         await this.getData()
+        this.processingDialog = false
       } catch (e) {
         console.log(e)
+        this.processingDialog = false
       }
     },
     unStake: async function () {
       try {
+        this.processingDialog = true
+        this.processingText = 'Unstaking'
         const provider = new this.$ethers.providers.Web3Provider(
           window.web3.currentProvider
         )
@@ -298,7 +331,9 @@ export default {
         const tx = await stakingContract.withdraw()
         await tx.wait()
         await this.getData()
+        this.processingDialog = false
       } catch (e) {
+        this.processingDialog = false
         console.log(e)
       }
     },
@@ -361,6 +396,7 @@ export default {
     totalStaked: '0.0',
     totalLocked: '0',
     myStaked: '0.0',
+    myBCX: '2.0',
     myRewards: '0.0',
     approved: false,
     staked: false,
@@ -369,6 +405,8 @@ export default {
     amount: 0,
     loading: false,
     apr: 0,
+    processingDialog: false,
+    processingText: 'Approving'
   }),
 }
 </script>
