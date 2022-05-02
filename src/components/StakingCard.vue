@@ -76,7 +76,7 @@
           Unstake
         </v-btn>
         <!-- <div class="stretch"></div> -->
-        <v-btn rounded color="primary" @click="claim" dark x-large width="100%" >
+        <v-btn rounded color="primary" @click="claim" x-large width="100%" :disabled="myRewards == 0" >
           Claim Rewards
         </v-btn>
       </div>
@@ -250,7 +250,10 @@ export default {
           erc20_abi,
           signer
         )
-        this.myBCX = await erc20.balanceOf(this.currentAccount)
+        var tempBal = await erc20.balanceOf(this.currentAccount)
+        this.myBCX = this.$ethers.utils.commify(
+          this.$ethers.utils.formatEther(tempBal)
+        )
         const totalStaked = await stakingContract.totalStaked()
         this.totalStaked = this.$ethers.utils.commify(
           this.$ethers.utils.formatEther(totalStaked)
@@ -414,7 +417,7 @@ export default {
     totalStaked: '0.0',
     totalLocked: '0',
     myStaked: '0.0',
-    myBCX: '2.0',
+    myBCX: '0.0',
     myRewards: '0.0',
     approved: false,
     staked: false,

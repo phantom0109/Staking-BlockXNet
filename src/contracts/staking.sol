@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.4;
 
-import "./RewardPool.sol";
+import './RewardPool.sol';
 
-contract StakingRewards {
+contract Staking {
     IERC20 public rewardsToken;
     IERC20 public stakingToken;
 
-    uint public rewardRate = 1e18;
+    uint public rewardRate = 63419e14;
     uint public lastUpdateTime;
     uint public rewardPerTokenStored;
     uint public multiplier = 1e18;
@@ -57,12 +58,12 @@ contract StakingRewards {
     }
 
     function rewardPerToken() public view returns (uint) {
-        if (_totalSupply == 0) {
+        if (_totalSupply == 0 || block.timestamp < 1651489200) {
             return 0;
         }
         return
             rewardPerTokenStored +
-            (((block.timestamp - lastUpdateTime) * rewardRate * multiplier) / _totalSupply / 3600 / 24);
+            (((block.timestamp - lastUpdateTime) * rewardRate * multiplier) / _totalSupply);
     }
 
     function earned(address account) public view returns (uint) {
