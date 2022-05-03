@@ -163,21 +163,19 @@
                   v-model="amount"
                   v-if="loading"
                   loading
-                  :rules="[
-                    () => amount <= myBCX || 'You cannot stake more than your BCX balance',
-                    () => amount % 1 == 0 || 'Please enter whole numbers only'
-                    ]"
+                  
                 ></v-text-field>
                 <v-text-field
                   label="Amount"
                   v-model="amount"
                   type='number'
-                  :rules="[
-                    () => amount <= myBCX || 'You cannot stake more than your BCX balance',
-                    () => amount % 1 == 0 || 'Please enter whole numbers only'
-                    ]"
+                  
                   v-else
                 ></v-text-field>
+                <!-- :rules="[
+                    () => amount <= myBCX || 'You cannot stake more than your BCX balance',
+                    () => amount % 1 == 0 || 'Please enter whole numbers only'
+                    ]" -->
               </v-col>
             </v-row>
           </v-container>
@@ -187,7 +185,7 @@
           <v-btn color="blue darken-1" text @click="dialog = false">
             Cancel
           </v-btn>
-          <v-btn color="blue darken-1" text @click="handleAgree" :disabled="amount > myBCX || amount % 1 != 0"> OK </v-btn>
+          <v-btn color="blue darken-1" text @click="handleAgree"> OK </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
