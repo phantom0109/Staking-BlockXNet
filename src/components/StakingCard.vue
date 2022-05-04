@@ -46,7 +46,7 @@
             </tr>
             <tr>
               <td>My BCX in wallet</td>
-              <td>{{ myBCX }} BCX</td>
+              <td>{{ myDisplayBCX }} BCX</td>
             </tr>
             <tr>
               <td>My Staked</td>
@@ -163,13 +163,19 @@
                   v-model="amount"
                   v-if="loading"
                   loading
-                  
+                  :rules="[
+                    () => amount <= myBCX || 'You cannot stake more than your BCX balance',
+                    () => amount % 1 == 0 || 'Please enter whole numbers only'
+                    ]"
                 ></v-text-field>
                 <v-text-field
                   label="Amount"
                   v-model="amount"
                   type='number'
-                  
+                  :rules="[
+                    () => amount <= myBCX || 'You cannot stake more than your BCX balance',
+                    () => amount % 1 == 0 || 'Please enter whole numbers only'
+                    ]"
                   v-else
                 ></v-text-field>
                 <!-- :rules="[
@@ -249,9 +255,11 @@ export default {
           signer
         )
         var tempBal = await erc20.balanceOf(this.currentAccount)
-        this.myBCX = this.$ethers.utils.commify(
+        this.myDisplayBCX = this.$ethers.utils.commify(
           this.$ethers.utils.formatEther(tempBal)
         )
+        this.myBCX = this.$ethers.utils.formatEther(tempBal)
+        this.myBCX = parseInt(this.myBCX)
         const totalStaked = await stakingContract.totalStaked()
         this.totalStaked = this.$ethers.utils.commify(
           this.$ethers.utils.formatEther(totalStaked)
@@ -416,6 +424,7 @@ export default {
     totalLocked: '0',
     myStaked: '0.0',
     myBCX: '0.0',
+    myDisplayBCX: '',
     myRewards: '0.0',
     approved: false,
     staked: false,
