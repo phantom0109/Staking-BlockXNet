@@ -104,6 +104,10 @@
         </v-btn>
       </div>
     </v-card>
+
+    <v-container style="max-width: 420px">
+      <p class="rewards">Rewards allocation will start on May 15 00:00 UTC. </p>
+    </v-container>
     <v-container class="grey lighten-5" style="max-width: 720px">
       <v-row>
         <v-col md="12">
@@ -223,13 +227,13 @@ export default {
           window.web3.currentProvider
         )
         const signer = provider.getSigner()
-        console.log('Signer: ', signer)
+        // console.log('Signer: ', signer)
         const erc20 = new this.$ethers.Contract(
           erc20_address,
           erc20_abi,
           signer
         )
-        console.log('ERC20 Address: ', erc20_address)
+        // console.log('ERC20 Address: ', erc20_address)
         const tx = await erc20.approve(
           address,
           this.$ethers.constants.MaxUint256
@@ -370,12 +374,12 @@ export default {
           alert('Make sure you have metamask!')
           return false
         } else {
-          console.log('We have the ethereum object', ethereum)
+          // console.log('We have the ethereum object', ethereum)
         }
         const accounts = await ethereum.request({ method: 'eth_accounts' })
         if (accounts.length !== 0) {
           const account = accounts[0]
-          console.log('Found an authorized account:', account)
+          // console.log('Found an authorized account:', account)
           this.currentAccount = account
           this.connected = true
           return true
@@ -398,7 +402,7 @@ export default {
         const accounts = await ethereum.request({
           method: 'eth_requestAccounts',
         })
-        console.log('Connected', accounts[0])
+        // console.log('Connected', accounts[0])
         this.currentAccount = accounts[0]
         this.connected = true
       } catch (error) {
@@ -439,6 +443,10 @@ export default {
 }
 </script>
 <style>
+.rewards{
+  color: red;
+}
+
 .stake-btn-container {
   padding: 24px;
 }
