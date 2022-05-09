@@ -1,2 +1,2 @@
 # staking
-Staking
+BCX Staking
