@@ -45,6 +45,7 @@ contract Staking {
     function setRewardRate(uint rate) external onlyOwner() {
         rewardRate = rate;
     }
+
     function addAdmin(address user) external onlyOwner() {
         isAdmin[user] = true;
     }
@@ -58,7 +59,7 @@ contract Staking {
     }
 
     function rewardPerToken() public view returns (uint) {
-        if (_totalSupply == 0 || block.timestamp < 1651489200) {
+        if (_totalSupply == 0 || block.timestamp < 1652572800) {
             return 0;
         }
         return
@@ -75,7 +76,10 @@ contract Staking {
 
     modifier updateReward(address account) {
         rewardPerTokenStored = rewardPerToken();
-        lastUpdateTime = block.timestamp;
+        if (block.timestamp < 1652572800)
+            lastUpdateTime = 1652572800;
+        else
+            lastUpdateTime = block.timestamp;
 
         rewards[account] = earned(account);
         userRewardPerTokenPaid[account] = rewardPerTokenStored;
@@ -83,7 +87,6 @@ contract Staking {
     }
 
     function stake(uint _amount) external updateReward(msg.sender) {
-        require(_amount >= 100 * 10 ** 18, "The minimum amount is 100BCX you can stake!");
         _totalSupply += _amount;
         if(_balances[msg.sender] == 0) stakers.push(msg.sender);
         _balances[msg.sender] += _amount;
